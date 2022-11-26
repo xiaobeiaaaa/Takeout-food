@@ -59,4 +59,15 @@ public class EmployeeController {
         request.getSession().setAttribute("employee",emp.getId());
         return R.success(emp);
     }
+
+    /**
+     * @Description: 员工退出
+     * @param request http请求
+     * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
+     */
+    @PostMapping("/logout")
+    public R<String> logout(HttpServletRequest request){
+        request.getSession().removeAttribute("employee");
+        return R.success("退出成功");
+    }
 }
