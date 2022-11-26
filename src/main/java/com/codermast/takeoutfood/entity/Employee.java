@@ -9,8 +9,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
-* 员工信息
- * **/
+ * @Description: 员工实体
+ * @author: CoderMast
+ * @date: 2022/11/26
+ * @Blog: <a href="https://www.codermast.com/">codermast</a>
+ */
 @TableName("employee")
 @Data
 public class Employee implements Serializable {
