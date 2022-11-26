@@ -50,7 +50,7 @@
       // 获取错误信息
       const msg = res.data.msg
       console.log('---code---',code)
-      if (res.data.code === 0 && res.data.msg === '未登录') {// 返回登录页面
+      if (res.data.code === 0 && msg === 'NOLOGIN') {// 返回登录页面
         // MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
         //     confirmButtonText: '重新登录',
         //     cancelButtonText: '取消',
