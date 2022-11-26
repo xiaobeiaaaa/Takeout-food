@@ -1,6 +1,8 @@
 package com.codermast.takeoutfood.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codermast.takeoutfood.common.R;
 import com.codermast.takeoutfood.entity.Employee;
 import com.codermast.takeoutfood.service.EmployeeService;
@@ -25,61 +27,61 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-   /**
-    * @Description: 员工登录
-    * @param employee 登录信息封装对象
-    * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
-    */
+    /**
+     * @param employee 登录信息封装对象
+     * @Description: 员工登录
+     * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
+     */
     @PostMapping("/login")
-    public R<Employee> login(HttpServletRequest request,@RequestBody Employee employee){
+    public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
         //1、将页面提交的密码password进行md5加密处理
         String password = employee.getPassword();
         password = DigestUtils.md5DigestAsHex(password.getBytes());
 
         //2、根据页面提交的用户名username查询数据库
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Employee::getUsername,employee.getUsername());
+        queryWrapper.eq(Employee::getUsername, employee.getUsername());
         Employee emp = employeeService.getOne(queryWrapper);
 
         //3、如果没有查询到则返回登录失败结果
-        if(emp == null){
+        if (emp == null) {
             return R.error("登录失败");
         }
 
         //4、密码比对，如果不一致则返回登录失败结果
-        if(!emp.getPassword().equals(password)){
+        if (!emp.getPassword().equals(password)) {
             return R.error("登录失败");
         }
 
         //5、查看员工状态，如果为已禁用状态，则返回员工已禁用结果
-        if(emp.getStatus() == 0){
+        if (emp.getStatus() == 0) {
             return R.error("账号已禁用");
         }
 
         //6、登录成功，将员工id存入Session并返回登录成功结果
-        request.getSession().setAttribute("employee",emp.getId());
+        request.getSession().setAttribute("employee", emp.getId());
         return R.success(emp);
     }
 
     /**
-     * @Description: 员工退出
      * @param request http请求
+     * @Description: 员工退出
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @PostMapping("/logout")
-    public R<String> logout(HttpServletRequest request){
+    public R<String> logout(HttpServletRequest request) {
         request.getSession().removeAttribute("employee");
         return R.success("退出成功");
     }
 
     /**
-     * @Description: 新增员工
      * @param employee 将请求内容封装为Employee对象接收
+     * @Description: 新增员工
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @PostMapping
-    public R<String> save(HttpServletRequest request,@RequestBody Employee employee){
-        log.info("新增员工....{}",employee);
+    public R<String> save(HttpServletRequest request, @RequestBody Employee employee) {
+        log.info("新增员工....{}", employee);
 
         // 为员工设置默认的登录密码，为123456
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
@@ -97,5 +99,32 @@ public class EmployeeController {
 
         employeeService.save(employee);
         return R.success("新增员工成功");
+    }
+
+    /**
+     * @Description: 查询员工信息
+     * @param page  页码
+     * @param pageSize 页面尺寸
+     * @param name 员工姓名
+     * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
+     */
+    @GetMapping("/page")
+    public R<Page> page(int page, int pageSize, String name) {
+        log.info(page + ":" + pageSize + ":" + name);
+
+        // 构造分页构造器
+        Page pageInfo = new Page(page,pageSize);
+
+        // 构造条件过滤器
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+
+        // 添加查询条件
+        queryWrapper.like(StringUtils.isNotEmpty(name),Employee::getName,name);
+
+        // 添加排序条件
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+
+        employeeService.page(pageInfo,queryWrapper);
+        return R.success(pageInfo);
     }
 }
