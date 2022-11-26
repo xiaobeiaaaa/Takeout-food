@@ -148,14 +148,16 @@ public class EmployeeController {
         return R.success("员工信息修改成功");
     }
     /**
-     * @Description: 根据id查用户
+     * @Description: 根据id查员工信息
      * @param id 用户id
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @GetMapping("/{id}")
     public R<Employee> getById(@PathVariable Long id){
         Employee employee = employeeService.getById(id);
-
-        return R.success(employee);
+        if (employee != null) {
+            return R.success(employee);
+        }
+        return R.error("没有该用户！");
     }
 }
