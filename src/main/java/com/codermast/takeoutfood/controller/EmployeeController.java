@@ -127,4 +127,24 @@ public class EmployeeController {
         employeeService.page(pageInfo,queryWrapper);
         return R.success(pageInfo);
     }
+
+    /**
+     * @Description: 根据id修改员工信息
+     * @param employee 封装对象信息,前端仅有id和status正确传送
+     * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
+     */
+    @PutMapping
+    public R<String> update(HttpServletRequest request,@RequestBody Employee employee){
+        log.info(employee.toString());
+
+        // 前端js处理long型数据丢失精度，故传递的id与数据库中不相同。
+        long empid = (long) request.getSession().getAttribute("employee");
+        // 设置更新时间
+        employee.setUpdateTime(LocalDateTime.now());
+        // 设置操作用户
+        employee.setUpdateUser(empid);
+
+        employeeService.updateById(employee);
+        return R.success("员工信息修改成功");
+    }
 }
