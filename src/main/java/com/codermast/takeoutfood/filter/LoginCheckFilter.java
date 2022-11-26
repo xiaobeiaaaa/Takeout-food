@@ -2,7 +2,6 @@ package com.codermast.takeoutfood.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.codermast.takeoutfood.common.R;
-import com.codermast.takeoutfood.entity.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 
