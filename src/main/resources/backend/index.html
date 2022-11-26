@@ -181,6 +181,7 @@
           logout() {
             logoutApi().then((res)=>{
               if(res.code === 1){
+                // 浏览器移除存储的员工信息
                 localStorage.removeItem('userInfo')
                 window.location.href = '/backend/page/login/login.html'
               }
