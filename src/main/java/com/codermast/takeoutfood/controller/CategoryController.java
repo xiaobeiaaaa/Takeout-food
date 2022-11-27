@@ -74,12 +74,12 @@ public class CategoryController {
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @DeleteMapping
-    public R<String> delete(String ids){
-        if ("".equals(ids)){
-            return R.error("类型为空");
-        }
+    public R<String> delete(Long ids){
+        // 直接通过id进行删除，未判断是否含有所关联的dish内容
+        //categoryService.removeById(ids);
 
-        categoryService.removeById(ids);
+        // 对于上述的优化
+        categoryService.remove(ids);
         return R.success("删除成功");
     }
 
