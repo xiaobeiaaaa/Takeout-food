@@ -3,6 +3,7 @@ package com.codermast.takeoutfood.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.codermast.takeoutfood.common.BaseContext;
 import com.codermast.takeoutfood.common.R;
 import com.codermast.takeoutfood.entity.Employee;
 import com.codermast.takeoutfood.service.EmployeeService;
@@ -139,11 +140,13 @@ public class EmployeeController {
 
         // 前端js处理long型数据丢失精度，故传递的id与数据库中不相同。
         long empid = (long) request.getSession().getAttribute("employee");
-        // 设置更新时间
-        employee.setUpdateTime(LocalDateTime.now());
-        // 设置操作用户
-        employee.setUpdateUser(empid);
+        //// 设置更新时间
+        //employee.setUpdateTime(LocalDateTime.now());
+        //// 设置操作用户
+        //employee.setUpdateUser(empid);
 
+        // 使用ThreadLocal存储当前用户值
+        BaseContext.setCurrentId(empid);
         employeeService.updateById(employee);
         return R.success("员工信息修改成功");
     }
