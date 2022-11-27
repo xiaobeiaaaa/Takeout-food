@@ -2,6 +2,7 @@ package com.codermast.takeoutfood.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * @Blog: <a href="https://www.codermast.com/">codermast</a>
  */
 @Data
+@TableName("dish")
 public class Dish implements Serializable {
 
     private static final long serialVersionUID = 1L;
