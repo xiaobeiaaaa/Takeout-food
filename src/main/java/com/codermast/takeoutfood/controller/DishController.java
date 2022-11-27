@@ -8,9 +8,14 @@ import com.codermast.takeoutfood.entity.Dish;
 import com.codermast.takeoutfood.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Description: 菜品管理控制器
@@ -48,5 +53,18 @@ public class DishController {
         dishService.page(pageInfo,queryWrapper);
 
         return R.success(pageInfo);
+    }
+
+    /**
+     * @Description: 批量删除菜品
+     * @param ids 要删除的菜品id
+     * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
+     */
+    @DeleteMapping
+    public R<String> delete(String ids){
+        String[] split = ids.split(",");
+        List<String> list = new ArrayList<>(Arrays.asList(split));
+        dishService.removeBatchByIds(list);
+        return R.success("批量删除成功！");
     }
 }
