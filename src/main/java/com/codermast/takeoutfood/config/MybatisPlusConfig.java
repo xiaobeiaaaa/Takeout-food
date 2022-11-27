@@ -3,6 +3,7 @@ package com.codermast.takeoutfood.config;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @Description: MybatisPlus配置类
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Bean;
  * @date: 2022/11/26
  * @Blog: <a href="https://www.codermast.com/">codermast</a>
  */
+@Configuration
 public class MybatisPlusConfig {
 
     /**
