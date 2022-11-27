@@ -10,4 +10,5 @@ import com.codermast.takeoutfood.entity.Category;
  * @Blog: <a href="https://www.codermast.com/">codermast</a>
  */
 public interface CategoryService extends IService<Category> {
+    void remove(Long id);
 }
