@@ -36,13 +36,12 @@ public class OrderController {
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @GetMapping("/page")
-    public R<Page> page(int page, int pageSize, String number, LocalDateTime beginTime,LocalDateTime endTime){
+    public R<Page<Order>> page(int page, int pageSize, String number, LocalDateTime beginTime,LocalDateTime endTime){
         LambdaQueryWrapper<Order> queryWrapper = new LambdaQueryWrapper<>();
 
-        Page pageInfo = new Page(page,pageSize);
+        Page<Order> pageInfo = new Page<>(page,pageSize);
 
         queryWrapper.like(StringUtils.isNotEmpty(number),Order::getNumber,number);
-
         queryWrapper.ge(ObjectUtils.isNotNull(beginTime),Order::getOrderTime,beginTime);
         queryWrapper.le(ObjectUtils.isNotNull(endTime),Order::getOrderTime,endTime);
 
