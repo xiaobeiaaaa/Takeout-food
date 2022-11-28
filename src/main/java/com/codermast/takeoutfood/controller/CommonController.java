@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -63,17 +66,38 @@ public class CommonController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return R.success(fileName);
+        return R.success(uuidFileName + extension);
     }
 
     /**
-     * @param name
-     * @Description: 文件下载
+     * @param name 文件名称
+     * @Description: 文件下载回显给页面
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @GetMapping("/download")
-    public R<String> download(String name) {
-        String imgUrl = "/backend/images/" + name;
-        return R.success(imgUrl);
+    public void download(String name, HttpServletResponse response) {
+        String imgUrl = imagesUrl + name;
+        File file = new File(imgUrl);
+
+        try {
+            // 输入流，读取文件
+            FileInputStream fileInputStream = new FileInputStream(file);
+            // 输出流，将读取到的文件输出到浏览器页面上
+            ServletOutputStream outputStream = response.getOutputStream();
+
+            int len = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((len = fileInputStream.read(bytes)) != -1){
+                outputStream.write(bytes);
+                outputStream.flush();
+            }
+
+            // 关闭资源
+            fileInputStream.close();
+            outputStream.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
