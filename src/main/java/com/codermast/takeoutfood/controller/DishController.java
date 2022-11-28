@@ -34,7 +34,7 @@ public class DishController {
     // 注入dish业务实体
     @Autowired
     private DishService dishService;
-    
+
     // 注入category实体
     @Autowired
     private CategoryService categoryService;
