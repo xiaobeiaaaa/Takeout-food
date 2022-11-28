@@ -2,6 +2,7 @@ package com.codermast.takeoutfood.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * 套餐菜品关系
  */
 @Data
+@TableName("setmeal_dish")
 public class SetMealDish implements Serializable {
 
     private static final long serialVersionUID = 1L;
