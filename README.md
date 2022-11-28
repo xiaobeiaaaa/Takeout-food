@@ -8,9 +8,9 @@
 
 ## 资料下载
 
-- 后端API思维导图：Xmind格式
-- SQL文件：
-
+- 后端API思维导图：[Xmind格式：点我下载](https://github.com/codermast/Takeout-food/blob/master/resource/%E7%91%9E%E5%90%89%E5%A4%96%E5%8D%96API%E5%89%96%E6%9E%90.xmind)
+- SQL文件：[点我下载](https://github.com/codermast/Takeout-food/blob/master/resource/db_reggie.sql)
+![](https://github.com/codermast/Takeout-food/blob/master/resource/瑞吉外卖API剖析.png)
 ## ❤️‍🩹开发进度
 ### V1版本
 > V1版本的后台功能已经开发完毕，就剩前台的API还没有开发完毕。
