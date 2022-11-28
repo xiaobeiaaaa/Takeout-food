@@ -110,11 +110,11 @@ public class EmployeeController {
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @GetMapping("/page")
-    public R<Page> page(int page, int pageSize, String name) {
+    public R<Page<Employee>> page(int page, int pageSize, String name) {
         log.info(page + ":" + pageSize + ":" + name);
 
         // 构造分页构造器
-        Page pageInfo = new Page(page,pageSize);
+        Page<Employee> pageInfo = new Page<>(page,pageSize);
 
         // 构造条件过滤器
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
@@ -140,10 +140,7 @@ public class EmployeeController {
 
         // 前端js处理long型数据丢失精度，故传递的id与数据库中不相同。
         long empid = (long) request.getSession().getAttribute("employee");
-        //// 设置更新时间
-        //employee.setUpdateTime(LocalDateTime.now());
-        //// 设置操作用户
-        //employee.setUpdateUser(empid);
+
 
         // 使用ThreadLocal存储当前用户值
         BaseContext.setCurrentId(empid);
