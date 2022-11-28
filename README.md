@@ -30,7 +30,7 @@
 2. 修改`src/main/resources/application.yml`文件内的数据库信息
 > 需要改动的就是下面我勾选的三个地方
 
-![](resource/截屏2022-11-28 21.59.36.png)
+![](https://github.com/codermast/Takeout-food/blob/master/resource/%E6%88%AA%E5%B1%8F2022-11-28%2021.59.36.png)
 
   - 数据库名
   - 数据库用户名
