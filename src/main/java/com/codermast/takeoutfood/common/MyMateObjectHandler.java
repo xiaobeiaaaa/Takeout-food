@@ -29,7 +29,6 @@ public class MyMateObjectHandler implements MetaObjectHandler {
         metaObject.setValue("updateTime", LocalDateTime.now());
         metaObject.setValue("createUser", BaseContext.getCurrentId());
         metaObject.setValue("updateUser", BaseContext.getCurrentId());
-
     }
 
     /**
