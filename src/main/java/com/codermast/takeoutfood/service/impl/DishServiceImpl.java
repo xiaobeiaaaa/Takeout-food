@@ -35,16 +35,16 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     @Override
     @Transactional
     public void saveWithFlavor(DishDto dishDto){
+        // 添加菜品
+        dishService.save(dishDto);
+
         List<DishFlavor> flavors = dishDto.getFlavors();
 
         for (DishFlavor flavor : flavors) {
-            flavor.setDishId(dishDto.getCategoryId());
+            flavor.setDishId(dishDto.getId());
         }
 
         // 批量保存菜品偏好
         dishFlavorService.saveBatch(flavors);
-
-        // 添加菜品
-        dishService.save(dishDto);
     }
 }
