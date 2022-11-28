@@ -56,8 +56,8 @@ public class CategoryController {
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @PostMapping
-    public R<String> save(HttpServletRequest httpServletRequest, @RequestBody Category category){
-        Long id = (Long) httpServletRequest.getSession().getAttribute("employee");
+    public R<String> save(HttpServletRequest request, @RequestBody Category category){
+        Long id = (Long) request.getSession().getAttribute("employee");
 
         if (category == null){
             return R.error("类型为空");
