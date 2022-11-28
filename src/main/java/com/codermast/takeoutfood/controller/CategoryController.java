@@ -34,8 +34,8 @@ public class CategoryController {
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @GetMapping("/page")
-    public R<Page> page(int page,int pageSize){
-        Page pageInfo = new Page(page,pageSize);
+    public R<Page<Category>> page(int page,int pageSize){
+        Page<Category> pageInfo = new Page<>(page,pageSize);
 
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
         // 增加排序条件
@@ -107,7 +107,7 @@ public class CategoryController {
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @GetMapping("/list")
-    public R<List> list(int type){
+    public R<List<Category>> list(int type){
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 
         queryWrapper.eq(Category::getType,type);
