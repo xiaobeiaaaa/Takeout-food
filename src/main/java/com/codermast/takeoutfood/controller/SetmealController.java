@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -113,10 +112,8 @@ public class SetmealController {
      * @Author: <a href="https://www.codermast.com/">CoderMast</a>
      */
     @DeleteMapping
-    public R<String> delete(String ids){
-        String[] idsStr = ids.split(",");
-        List<String> idList = Arrays.asList(idsStr);
-        boolean ret = setMealService.removeBatchByIds(idList);
+    public R<String> delete(@RequestParam List<Long> ids){
+        boolean ret = setMealService.removeBatchByIds(ids);
         return ret?R.success("删除成功") : R.error("删除失败");
     }
 
