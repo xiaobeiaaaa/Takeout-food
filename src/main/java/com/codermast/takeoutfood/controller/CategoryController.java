@@ -90,11 +90,11 @@ public class CategoryController {
      * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
      */
     @PutMapping
-    public R<String> update(HttpServletRequest httpServletRequest,@RequestBody Category category){
+    public R<String> update(HttpServletRequest request,@RequestBody Category category){
         if (category == null){
             return R.error("类型为空");
         }
-        Long id = (Long) httpServletRequest.getSession().getAttribute("employee");
+        Long id = (Long) request.getSession().getAttribute("employee");
 
         BaseContext.setCurrentId(id);
         categoryService.updateById(category);
