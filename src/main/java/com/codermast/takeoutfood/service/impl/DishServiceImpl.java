@@ -37,7 +37,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     public void saveWithFlavor(DishDto dishDto){
         // 添加菜品
         dishService.save(dishDto);
-
+        // 偏好
         List<DishFlavor> flavors = dishDto.getFlavors();
 
         for (DishFlavor flavor : flavors) {
