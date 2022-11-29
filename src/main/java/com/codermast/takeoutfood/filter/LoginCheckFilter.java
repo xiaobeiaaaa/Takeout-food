@@ -28,7 +28,7 @@ public class LoginCheckFilter implements Filter {
      * @param servletResponse servlet响应
      * @param filterChain 过滤器
      * @Description: 登录拦截过滤
-     * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
+     * @Author:  <a href="https://www.codermast.com/">CoderMast</a>
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -42,7 +42,9 @@ public class LoginCheckFilter implements Filter {
                 "/backend/**",      // 后台静态资源
                 "/front/**",        // 前台静态资源
                 "/employee/login",  // 员工登录
-                "/employee/logout"  // 员工注册
+                "/employee/logout", // 员工注册
+                "/user/login",      // 用户登录
+                "/user/sendMsg",    // 发送验证码
         };
 
         // 匹配成功,直接放行
@@ -52,16 +54,24 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
-        //2.用户已登录
+        //2.1员工已登录
         Object employee = request.getSession().getAttribute("employee");
         if (employee != null) {
+            log.info("员工已登录，已放行....");
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        //2.2用户已登录
+        Object userId = request.getSession().getAttribute("user");
+        if (userId != null) {
             log.info("用户已登录，已放行....");
             filterChain.doFilter(request,response);
             return;
         }
 
-        //3.用户未登录
-        log.info("用户未登录，已拦截....");
+        //3.均未登录
+        log.info("未登录，已拦截....");
         response.getWriter().write(JSON.toJSONString(R.error("NOLOGIN")));
         response.flushBuffer();
     }
@@ -70,7 +80,7 @@ public class LoginCheckFilter implements Filter {
      * @param urls       放行的url
      * @param requestUri 请求的url
      * @Description: 检查路径是否匹配，以获得放行
-     * @Author: CoderMast <a href="https://www.codermast.com/">...</a>
+     * @Author:  <a href="https://www.codermast.com/">CoderMast</a>
      */
     public boolean check(String[] urls, String requestUri) {
         for (String url : urls) {
